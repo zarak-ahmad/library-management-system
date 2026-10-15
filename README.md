@@ -47,31 +47,31 @@ Includes **Admin**, **Librarian**, and **Student** roles with Role-Based Access 
 
 ### Login
 
-![Login](docs/screenshots/01-login.png)
+![Login](./docs/screenshots/01-login.png)
 
 ### Admin Dashboard
 
-![Admin Dashboard](docs/screenshots/02-admin-dashboard.png)
+![Admin Dashboard](./docs/screenshots/02-admin-dashboard.png)
 
 ### Book Inventory
 
-![Books](docs/screenshots/03-books.png)
+![Books](./docs/screenshots/03-books.png)
 
 ### Book Requests
 
-![Book Requests](docs/screenshots/04-book-requests.png)
+![Book Requests](./docs/screenshots/04-book-requests.png)
 
 ### Issue & Return
 
-![Issue and Return](docs/screenshots/05-issue-return.png)
+![Issue and Return](./docs/screenshots/05-issue-return.png)
 
 ### Student — Browse Books
 
-![Student Browse Books](docs/screenshots/06-student-browse.png)
+![Student Browse Books](./docs/screenshots/06-student-browse.png)
 
 ### Student — My Library
 
-![Student My Library](docs/screenshots/07-student-library.png)
+![Student My Library](./docs/screenshots/07-student-library.png)
 
 ## Installation
 
