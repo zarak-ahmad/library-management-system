@@ -1,0 +1,11 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: lms-mongodb-dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+
+volumes:
+  mongodb_dev_data:

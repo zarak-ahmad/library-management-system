@@ -1,0 +1,132 @@
+services:
+
+  mongodb:
+
+    image: mongo:7
+
+    container_name: lms-mongodb
+
+    restart: unless-stopped
+
+    ports:
+
+      - "27017:27017"
+
+    volumes:
+
+      - mongodb_data:/data/db
+
+    environment:
+
+      MONGO_INITDB_DATABASE: lms
+
+    healthcheck:
+
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/lms --quiet
+
+      interval: 10s
+
+      timeout: 5s
+
+      retries: 5
+
+      start_period: 20s
+
+
+
+  backend:
+
+    build:
+
+      context: ./backend
+
+      dockerfile: Dockerfile
+
+    container_name: lms-backend
+
+    restart: unless-stopped
+
+    ports:
+
+      - "5000:5000"
+
+    environment:
+
+      NODE_ENV: production
+
+      PORT: 5000
+
+      MONGODB_URI: mongodb://mongodb:27017/lms
+
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-change-me-access-secret-min-32-chars!!}
+
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-change-me-refresh-secret-min-32-chars!}
+
+      CLIENT_URL: ${CLIENT_URL:-http://localhost}
+
+      RUN_SEED: ${RUN_SEED:-true}
+
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@lms.edu}
+
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin@123456}
+
+      SMTP_HOST: ${SMTP_HOST:-}
+
+      SMTP_PORT: ${SMTP_PORT:-587}
+
+      SMTP_USER: ${SMTP_USER:-}
+
+      SMTP_PASS: ${SMTP_PASS:-}
+
+      EMAIL_FROM: ${EMAIL_FROM:-LMS <noreply@lms.edu>}
+
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+
+    volumes:
+
+      - backend_uploads:/app/uploads
+
+    depends_on:
+
+      mongodb:
+
+        condition: service_healthy
+
+
+
+  frontend:
+
+    build:
+
+      context: ./frontend
+
+      dockerfile: Dockerfile
+
+      args:
+
+        VITE_API_URL: /api/v1
+
+    container_name: lms-frontend
+
+    restart: unless-stopped
+
+    ports:
+
+      - "80:80"
+
+    depends_on:
+
+      - backend
+
+
+
+volumes:
+
+  mongodb_data:
+
+  backend_uploads:
+
